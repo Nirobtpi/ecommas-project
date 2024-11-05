@@ -14,7 +14,28 @@ use Intervention\Image\Drivers\Gd\Driver;
 class UserController extends Controller
 {
     public function editProfile(){
+       
         return view('admin.user.edit-profile');
+    }
+
+    public function User(){
+         $users=User::all();
+        return view('admin.user.users',compact('users'));
+    }
+
+    public function userDelete($id){
+
+        $user=User::findOrFail($id);
+
+         if($user->photo != ''){
+            $delete_photo=public_path('uploads/user/'. $user->photo);
+            unlink($delete_photo);
+        }
+
+
+       User::findOrFail($id)->delete();
+       return back()->with('success','User Deleted Successfully');
+
     }
 
     public function updateProfile(Request $request, $id){
@@ -50,7 +71,7 @@ class UserController extends Controller
             'photo'=>['required','mimes:jpg,bmp,png','max:2048'],
         ]);
 
-        if(Auth::user()->photo !==''){
+        if(Auth::user()->photo !=''){
             $delete_photo=public_path('uploads/user/'. Auth::user()->photo);
             unlink($delete_photo);
         }
@@ -73,5 +94,22 @@ class UserController extends Controller
         ]);
 
         return back()->with('photo','Photo update successfully');
+    }
+
+
+    public function addUser(Request $request){
+        // return $request->all();
+        $request->validate([
+            'name'=>['required'],
+            'email'=>['required','unique:users,email'],
+            'password'=>['required','min:8','confirmed'],
+            
+        ]);
+        User::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+        ]);
+        return back()->with('add_user','User Added Successfully');
     }
 }

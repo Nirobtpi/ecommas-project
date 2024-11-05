@@ -33,6 +33,9 @@ Route::middleware('auth')->prefix('admin')->group(function(){
     Route::post('/profile/update/{id}',[UserController::class,'updateProfile'])->name('admin.update.profile');
     Route::post('/profile/update/password/{id}',[UserController::class,'updatePassword'])->name('admin.update.password');
     Route::post('/profile/update/photo/{id}',[UserController::class,'update_photo'])->name('admin.update.photo');
+    Route::get('users',[UserController::class,'User'])->name('user');
+    Route::Post('user/add',[UserController::class,'addUser'])->name('user.add');
+    Route::get('user/delete/{id}',[UserController::class,'userDelete'])->name('user.delete');
 });
 
 
