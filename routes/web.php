@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -36,6 +37,12 @@ Route::middleware('auth')->prefix('admin')->group(function(){
     Route::get('users',[UserController::class,'User'])->name('user');
     Route::Post('user/add',[UserController::class,'addUser'])->name('user.add');
     Route::get('user/delete/{id}',[UserController::class,'userDelete'])->name('user.delete');
+
+    // ===== Categorty ====
+
+    Route::get('category',[CategoryController::class,'category'])->name('category');
+
+
 });
 
 
