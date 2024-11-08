@@ -91,4 +91,24 @@ class CategoryController extends Controller
 
         return back()->with('delete','Category Deleted Successfully');
     }
+
+    public function categoryTrash(){
+        $delete_cat= Category::onlyTrashed()->get();
+        return view('admin.category.category-trush', compact('delete_cat'));
+    }
+
+    public function categoryRestore($id){
+        Category::withTrashed()->findOrFail($id)->restore();
+        return redirect()->route('category')->with('retore','Category Restore Successfully');
+    }
+    public function categoryForceDelete($id){
+       
+       $del= Category::withTrashed()->findOrFail($id);
+       if($del->category_image != ''){
+        unlink(public_path('uploads/category/').$del->category_image);
+       }
+       $del->forceDelete();
+
+         return back()->with('forceDelete','Category Deleted Parmanently');
+    }
 }
