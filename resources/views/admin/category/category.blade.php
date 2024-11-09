@@ -7,9 +7,6 @@
         <div class="col-lg-6">
             <div class="card table-responsive">
                 <div class="card-body">
-                    {{-- @if (session('delete'))
-                        <div class="alert alert-danger m-2">{{ session('delete') }}</div>
-                    @endif --}}
                     @if (session('cat_update'))
                         <div class="alert alert-success m-2">{{ session('cat_update') }}</div>
                     @endif
@@ -22,43 +19,61 @@
                     <h5 class="card-title">All categorys</h5>
 
                     <!-- Table with stripped rows -->
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Photo</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($categories as $category)
+                    <form action="{{ route('category.froceCheckDelete') }}" id='submitform' method="POST">
+                        @csrf
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <th scope="row">{{ $loop->index + 1 }}</th>
-                                    <td>{{ $category->name }}</td>
-                                    <td>
-                                        @if ($category->category_image == '')
-                                            <img style="width: 60px; height:60px"
-                                                src="{{ asset('admin_assets/img/profile-img.jpg') }}" alt="Profile"
-                                                class="rounded-circle">
-                                        @else
-                                            <img style="width: 60px; height:60px"
-                                                src="{{ asset('uploads/category') }}/{{ $category->category_image }}"
-                                                alt="" class="rounded-circle">
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('category.edit', $category->id) }}"
-                                            class="btn btn-sm btn-info">Edit</a>
-                                        <a data-link="{{ route('category.delete', $category->id) }}"
-                                            class="btn btn-sm btn-danger del">Delete</a>
-                                    </td>
+                                    <th>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="chkSelectAll">
+                                            <label class="form-check-label" for="chkSelectAll">
+                                                Check All
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th scope="col">Sl</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Photo</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <!-- End Table with stripped rows -->
-
+                            </thead>
+                            <tbody>
+                                @foreach ($categories as $category)
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input chkDel" name="category_id[]"
+                                                    value="{{ $category->id }}" type="checkbox" id="gridCheck1">
+                                        </td>
+                                        <td scope="row">{{ $loop->index + 1 }}</td>
+                                        <td>{{ Str::title($category->name) }}</td>
+                                        <td>
+                                            @if ($category->category_image == '')
+                                                <img style="width: 60px; height:60px"
+                                                    src="{{ asset('admin_assets/img/profile-img.jpg') }}" alt="Profile"
+                                                    class="rounded-circle">
+                                            @else
+                                                <img style="width: 60px; height:60px"
+                                                    src="{{ asset('uploads/category') }}/{{ $category->category_image }}"
+                                                    alt="" class="rounded-circle">
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('category.edit', $category->id) }}"
+                                                class="btn btn-sm btn-info">Edit</a>
+                                            <a data-link="{{ route('category.delete', $category->id) }}"
+                                                class="btn btn-sm btn-danger del">Delete</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+                        <div class="my-2">
+                            <button  class="btn btn-danger del-check d-none">Delete All</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -132,6 +147,48 @@
                 icon: "success"
             });
         </script>
+    @endif
+
+    <script>
+        // check all button 
+        $("#chkSelectAll").on('click', function() {
+            this.checked ? $(".chkDel").prop("checked", true) : $(".chkDel").prop("checked", false);
+            $('.del-check').toggleClass('d-none');
+        })
+        // single check button show 
+        $(".chkDel").on('click', function() {
+            $('.del-check').removeClass('d-none');
+        })
+        // check delete form submit 
+        $('.del-check').click(function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#submitform').submit();  // Submit form on confirmation
+                }
+            });
+        });
+
+    </script>
+
+    @if (session('check_del')){
+        <script>
+            Swal.fire({
+            title: "Deleted!",
+            text: "{{ session('check_del') }}",
+            icon: "success"
+        });
+        </script>
+    }
+        
     @endif
 
 @endsection

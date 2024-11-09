@@ -15,6 +15,7 @@ class CategoryController extends Controller
         return view('admin.category.category',compact('categories'));
     }
 
+    // category store 
     public function category_store(Request $request){
         
         $request->validate([
@@ -43,6 +44,7 @@ class CategoryController extends Controller
         return view('admin.category.category-edit',compact('category'));
     }
 
+    // category update 
     public function category_update(Request $request,$id){
 
         $category=Category::findOrFail($id);
@@ -86,21 +88,26 @@ class CategoryController extends Controller
     }
 
 
+    // category soft delete 
     public function category_delete($id){
         Category::findOrFail($id)->delete();
 
         return back()->with('delete','Category Deleted Successfully');
     }
 
+    // category deleted item view 
     public function categoryTrash(){
         $delete_cat= Category::onlyTrashed()->get();
         return view('admin.category.category-trush', compact('delete_cat'));
     }
 
+    // category Restore 
     public function categoryRestore($id){
         Category::withTrashed()->findOrFail($id)->restore();
-        return redirect()->route('category')->with('retore','Category Restore Successfully');
+        return back()->with('retore','Category Restore Successfully');
     }
+
+    // category Permanent Delete 
     public function categoryForceDelete($id){
        
        $del= Category::withTrashed()->findOrFail($id);
@@ -110,5 +117,33 @@ class CategoryController extends Controller
        $del->forceDelete();
 
          return back()->with('forceDelete','Category Deleted Parmanently');
+    }
+
+    // category categoryCheckDelete 
+    public function categoryCheckDelete(Request $request){
+       foreach($request->category_id as $cat_id){
+        Category::findOrFail($cat_id)->delete();
+       }
+       return back()->with('check_del','Deleted All Category Successfully');
+    }
+
+    public function check_restore(Request $request){
+        
+        if($request->action_btn == 1){
+            foreach($request->category_id as $cat_id){
+                Category::withTrashed()->findOrFail($cat_id)->restore();
+            }
+            return back()->with('retore','Category Restore Successfully');
+        }
+        
+        if($request->action_btn == 2){
+            foreach($request->category_id as $cat_id){
+              $catImage=Category::onlyTrashed()->findOrFail($cat_id)->category_image;
+              unlink(public_path('uploads/category/').$catImage);
+                Category::withTrashed()->findOrFail($cat_id)->forceDelete();
+            }
+            return back()->with('forceDelete','Category Restore Successfully');
+        }
+       
     }
 }

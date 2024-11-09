@@ -48,6 +48,8 @@ Route::middleware('auth')->prefix('admin')->group(function(){
     Route::get('category/trash',[CategoryController::class,'categoryTrash'])->name('category.trash');
     Route::get('category/restore/{id}',[CategoryController::class,'categoryRestore'])->name('category.restore');
     Route::get('category/force/delete/{id}',[CategoryController::class,'categoryForceDelete'])->name('category.froceDelete');
+    Route::post('category/check_delete',[CategoryController::class,'categoryCheckDelete'])->name('category.froceCheckDelete');
+    Route::post('category/check_restore',[CategoryController::class,'check_restore'])->name('category.check.restore');
 
 
 });
