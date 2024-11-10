@@ -307,6 +307,25 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-tabs" data-bs-toggle="collapse" href="#"
+                    aria-expanded="false">
+                    <i class="bi bi-journal-text"></i><span>Tags</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-tabs" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+                    <li>
+                        <a href="{{ route('tag') }}" class="{{ Route::is('tag') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Add Tags</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('tag.trash') }}" class="{{ Route::is('tag.trash') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Trash</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </li>
 
         </ul>
 

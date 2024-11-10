@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +51,15 @@ Route::middleware('auth')->prefix('admin')->group(function(){
     Route::get('category/force/delete/{id}',[CategoryController::class,'categoryForceDelete'])->name('category.froceDelete');
     Route::post('category/check_delete',[CategoryController::class,'categoryCheckDelete'])->name('category.froceCheckDelete');
     Route::post('category/check_restore',[CategoryController::class,'check_restore'])->name('category.check.restore');
+
+    //=========== Tags ==========
+    Route::get('tag',[TagController::class,'tag'])->name('tag');
+    Route::post('tag/store',[TagController::class,'tag_store'])->name('tag.store');
+    Route::get('tag/softdelete/{id}',[TagController::class,'tag_softdelete'])->name('tag.softdelete');
+    Route::post('tag/checkdelete',[TagController::class,'tag_checkdelete'])->name('tag.checkdelete');
+    Route::post('tag/checkrestoredelete',[TagController::class,'checkrestoredelete'])->name('tag.checkrestoredelete');
+    Route::get('tag/trash',[TagController::class,'trash'])->name('tag.trash');
+    Route::get('tag/delete',[TagController::class,'tag_delete'])->name('tag.delete');
 
 
 });
