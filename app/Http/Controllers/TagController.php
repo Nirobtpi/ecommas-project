@@ -49,4 +49,16 @@ class TagController extends Controller
         return back()->with('tag','Your Work successfully Completed');
     }
 
+    // tag update 
+    public function tagEdit($id){
+        $tag=Tag::findOrFail($id);
+        return view('admin.tag.tag-edit',compact('tag'));
+    }
+    public function tagUpdate(Request $request, $id){
+        Tag::findOrFail($id)->update([
+            'name'=>$request->name,
+        ]);
+        return redirect()->route('tag')->with('tag_update','Tag Updated Successfully');
+    }
+
 }

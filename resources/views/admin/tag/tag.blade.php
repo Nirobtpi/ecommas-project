@@ -37,7 +37,7 @@
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $tag->name }}</td>
                                         <td>
-                                            <a href="" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('tag.edit', $tag->id) }}" class="btn btn-info">Edit</a>
                                             <a data-link="{{ route('tag.softdelete', $tag->id) }}"
                                                 class="btn btn-danger delete">Delete</a>
                                         </td>
@@ -97,6 +97,19 @@
         </script>
         }
     @endif
+    @if (session('tag_update'))
+        {
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "{{ session('tag_update') }}",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+        }
+    @endif
 
     <script>
         $('.delete').click(function() {
@@ -133,7 +146,7 @@
             $(".check").prop('checked', $(this).prop("checked"));
             $('.all-delete').toggleClass('d-none')
         });
-        $('.check').click(function(){
+        $('.check').click(function() {
             $('.all-delete').removeClass('d-none')
         })
     </script>

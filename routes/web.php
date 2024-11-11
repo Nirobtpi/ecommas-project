@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,10 @@ Route::middleware('auth')->prefix('admin')->group(function(){
     Route::post('tag/checkrestoredelete',[TagController::class,'checkrestoredelete'])->name('tag.checkrestoredelete');
     Route::get('tag/trash',[TagController::class,'trash'])->name('tag.trash');
     Route::get('tag/delete',[TagController::class,'tag_delete'])->name('tag.delete');
+
+    // Tag Edit
+    Route::get('tag/edit/{id}',[TagController::class,'tagEdit'])->name('tag.edit');
+    Route::post('tag/update/{id}',[TagController::class,'tagUpdate'])->name('tag.update');
 
 
 });
