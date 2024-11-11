@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Author\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
@@ -20,7 +21,13 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 // Frontend Route 
-Route::get('/', [FrontendController::class,'home'])->name('home');
+Route::get('/', [FrontendController::class,'index'])->name('index');
+Route::prefix('author')->group(function(){
+    Route::get('login/page',[FrontendController::class,'author_login_page'])->name('author.login.page');
+    Route::get('signup/page',[FrontendController::class,'author_signup_page'])->name('author.signup.page');
+});
+
+
 
 // Backend Route 
 Route::get('/dashboard', [HomeController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -68,6 +75,9 @@ Route::middleware('auth')->prefix('admin')->group(function(){
 
 
 });
+
+// Frontend all route 
+
 
 
 require __DIR__.'/auth.php';
