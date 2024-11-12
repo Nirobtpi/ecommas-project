@@ -209,7 +209,20 @@
                     </div>
                     <!--button-subscribe-->
                     <div class="botton-sub">
-                        <a href="{{ route('author.login.page') }}" class="btn-subscribe">Sign In</a>
+                        @auth('author')
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                    {{ Auth::guard('author')->user()->name }}
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ route('author.logout') }}">Logout</a>
+                                </div>
+                            </div>
+                        @else
+                            <a href="{{ route('author.login.page') }}" class="btn-subscribe">Sign In</a>
+                        @endauth
+
                     </div>
                     <!--navbar-toggler-->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"

@@ -42,4 +42,8 @@ class AuthorController extends Controller
             return back()->with('user_err','Email Does Not Exist!');
         }
     }
+    public function author_logout(){
+        Auth::guard('author')->logout();
+        return redirect('/');
+    }
 }

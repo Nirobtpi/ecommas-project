@@ -80,6 +80,7 @@ Route::middleware('auth')->prefix('admin')->group(function(){
 
 Route::prefix('author')->group(function(){
     Route::post('/login',[AuthorController::class,'author_login'])->name('author.login');
+    Route::get('/logout',[AuthorController::class,'author_logout'])->name('author.logout');
     Route::post('/register',[AuthorController::class,'author_register'])->name('author.register');
 });
 
