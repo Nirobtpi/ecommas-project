@@ -76,8 +76,12 @@ Route::middleware('auth')->prefix('admin')->group(function(){
 
 });
 
-// Frontend all route 
+// Author all route 
 
+Route::prefix('author')->group(function(){
+    Route::post('/login',[AuthorController::class,'author_login'])->name('author.login');
+    Route::post('/register',[AuthorController::class,'author_register'])->name('author.register');
+});
 
 
 require __DIR__.'/auth.php';
