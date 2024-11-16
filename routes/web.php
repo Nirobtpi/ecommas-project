@@ -25,17 +25,19 @@ Route::get('/', [FrontendController::class,'index'])->name('index');
 Route::prefix('author')->group(function(){
     Route::get('login/page',[FrontendController::class,'author_login_page'])->name('author.login.page');
     Route::get('signup/page',[FrontendController::class,'author_signup_page'])->name('author.signup.page');
+    Route::post('/login',[AuthorController::class,'author_login'])->name('author.login');
+    Route::post('/register',[AuthorController::class,'author_register'])->name('author.register');
 });
 
 
 
 // Backend Route 
 Route::get('/dashboard', [HomeController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('logout',[HomeController::class,'logout']);
+    Route::get('/logout',[HomeController::class,'logout'])->name('admin.logout');
 });
 
 Route::middleware('auth')->prefix('admin')->group(function(){
@@ -78,10 +80,9 @@ Route::middleware('auth')->prefix('admin')->group(function(){
 
 // Author all route 
 
-Route::prefix('author')->group(function(){
-    Route::post('/login',[AuthorController::class,'author_login'])->name('author.login');
+Route::middleware('authormiddleware')->prefix('author')->group(function(){
     Route::get('/logout',[AuthorController::class,'author_logout'])->name('author.logout');
-    Route::post('/register',[AuthorController::class,'author_register'])->name('author.register');
+    Route::get('/dashboard',[AuthorController::class,'author_dashboard'])->name('author.dashboard');
 });
 
 

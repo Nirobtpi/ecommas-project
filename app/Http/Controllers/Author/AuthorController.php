@@ -33,7 +33,12 @@ class AuthorController extends Controller
 
         if(Author::where('email',$request->email)->exists()){
             if(Auth::guard('author')->attempt(['email' => $request->email, 'password' => $request->password])){
-                return redirect('/');
+               if(Auth::guard("author")->user()->status == 1){
+                 return redirect('/');
+               }else{
+                 Auth::guard('author')->logout();
+                 return back()->with('wrong','Your Account Does Not Active!');
+               }
             }else{
                   return back()->with('wrong','Email Or Password Does Not Exist!'); 
             }
@@ -45,5 +50,8 @@ class AuthorController extends Controller
     public function author_logout(){
         Auth::guard('author')->logout();
         return redirect('/');
+    }
+    public function author_dashboard(){
+        return view('frontend.author.admin');
     }
 }

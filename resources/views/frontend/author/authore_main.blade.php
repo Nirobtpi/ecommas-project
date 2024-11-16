@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Ecommas - @yield('title')</title>
+    <title>Author Dashboard</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{{ asset('admin_assets/img/favicon.png') }}" rel="icon">
-    <link href="{{ asset('admin_assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+    <link href="{{ asset('admin_assets') }}/img/favicon.png" rel="icon">
+    <link href="{{ asset('admin_assets') }}/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -20,17 +20,24 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="{{ asset('admin_assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin_assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin_assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin_assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin_assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin_assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin_assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin_assets') }}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('admin_assets') }}/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ asset('admin_assets') }}/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="{{ asset('admin_assets') }}/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="{{ asset('admin_assets') }}/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="{{ asset('admin_assets') }}/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="{{ asset('admin_assets') }}/vendor/simple-datatables/style.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="{{ asset('admin_assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin_assets') }}/css/style.css" rel="stylesheet">
 
+    <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
 <body>
@@ -40,7 +47,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
-                <img src="assets/img/logo.png" alt="">
+                <img src="{{ asset('admin_assets') }}/img/logo.png" alt="">
                 <span class="d-none d-lg-block">NiceAdmin</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -155,7 +162,8 @@
 
                         <li class="message-item">
                             <a href="#">
-                                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                                <img src="{{ asset('admin_assets') }}/img/messages-1.jpg" alt=""
+                                    class="rounded-circle">
                                 <div>
                                     <h4>Maria Hudson</h4>
                                     <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -169,7 +177,8 @@
 
                         <li class="message-item">
                             <a href="#">
-                                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                                <img src="{{ asset('admin_assets') }}/img/messages-2.jpg" alt=""
+                                    class="rounded-circle">
                                 <div>
                                     <h4>Anna Nelson</h4>
                                     <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -183,7 +192,8 @@
 
                         <li class="message-item">
                             <a href="#">
-                                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                                <img src="{{ asset('admin_assets') }}/img/messages-3.jpg" alt=""
+                                    class="rounded-circle">
                                 <div>
                                     <h4>David Muldon</h4>
                                     <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -207,20 +217,15 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        @if (Auth::user()->photo == '')
-                            <img src="{{ asset('admin_assets/img/profile-img.jpg') }}" alt="Profile"
-                                class="rounded-circle">
-                        @else
-                            <img src="{{ asset('uploads/user') }}/{{ Auth::user()->photo }}" alt="Profile"
-                                class="rounded-circle">
-                        @endif
-
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth()->user()->name }}</span>
+                        <img src="{{ asset('admin_assets') }}/img/profile-img.jpg" alt="Profile"
+                            class="rounded-circle">
+                        <span
+                            class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::guard('author')->user()->name }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ Auth()->user()->name }}</h6>
+                            <h6>{{ Auth::guard('author')->user()->name }}n</h6>
                             <span>Web Designer</span>
                         </li>
                         <li>
@@ -236,26 +241,29 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+
                         <li>
-                            <a class="dropdown-item d-flex align-items-center"
-                                href="{{ route('admin.edit.profile') }}">
-                                <i class="bi bi-question-circle"></i>
-                                <span>Edit Profile</span>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-gear"></i>
+                                <span>Account Settings</span>
                             </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.logout') }}">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Log Out</span>
-                            </a>
-                        </li>
+                        <hr class="dropdown-divider">
+                </li>
 
-                    </ul><!-- End Profile Dropdown Items -->
-                </li><!-- End Profile Nav -->
+                <li>
+                    <a class="dropdown-item d-flex align-items-center" href="{{ route('author.logout') }}">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Log Out</span>
+                    </a>
+                </li>
+
+            </ul><!-- End Profile Dropdown Items -->
+            </li><!-- End Profile Nav -->
 
             </ul>
         </nav><!-- End Icons Navigation -->
@@ -268,7 +276,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="index.html">
+                <a class="nav-link collapsed" href="{{ route('author.dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -277,56 +285,24 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-menu-button-wide"></i><span>Components</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{ route('user') }}" class="{{ Route::is('user') ? 'active' : '' }}">
-                            <i class="bi bi-circle"></i><span>User List</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#"
-                    aria-expanded="false">
-                    <i class="bi bi-journal-text"></i><span>Category</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
-                    <li>
-                        <a href="{{ route('category') }}" class="{{ Route::is('category') ? 'active' : '' }}">
-                            <i class="bi bi-circle"></i><span>Add Category</span>
+                        <a href="components-alerts.html">
+                            <i class="bi bi-circle"></i><span>Alerts</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('category.trash') }}"
-                            class="{{ Route::is('category.trash') ? 'active' : '' }}">
-                            <i class="bi bi-circle"></i><span>Trash</span>
+                        <a href="components-accordion.html">
+                            <i class="bi bi-circle"></i><span>Accordion</span>
                         </a>
                     </li>
                 </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-tabs" data-bs-toggle="collapse" href="#"
-                    aria-expanded="false">
-                    <i class="bi bi-journal-text"></i><span>Tags</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-tabs" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
-                    <li>
-                        <a href="{{ route('tag') }}" class="{{ Route::is('tag') ? 'active' : '' }}">
-                            <i class="bi bi-circle"></i><span>Add Tags</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('tag.trash') }}" class="{{ Route::is('tag.trash') ? 'active' : '' }}">
-                            <i class="bi bi-circle"></i><span>Trash</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li>
-
+            </li><!-- End Components Nav -->
+        </ul>
+        </li><!-- End Icons Nav -->
         </ul>
 
     </aside><!-- End Sidebar-->
@@ -334,7 +310,6 @@
     <main id="main" class="main">
 
         @yield('content')
-
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
@@ -355,21 +330,17 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="{{ asset('admin_assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('admin_assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('admin_assets/vendor/chart.js/chart.umd.js') }}"></script>
-    <script src="{{ asset('admin_assets/vendor/echarts/echarts.min.js') }}"></script>
-    <script src="{{ asset('admin_assets/vendor/quill/quill.js') }}"></script>
-    <script src="{{ asset('admin_assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
-    <script src="{{ asset('admin_assets/vendor/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ asset('admin_assets/vendor/php-email-form/validate.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('admin_assets') }}/') }}vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="{{ asset('admin_assets') }}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('admin_assets') }}/vendor/chart.js/chart.umd.js"></script>
+    <script src="{{ asset('admin_assets') }}/vendor/echarts/echarts.min.js"></script>
+    <script src="{{ asset('admin_assets') }}/vendor/quill/quill.js"></script>
+    <script src="{{ asset('admin_assets') }}/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="{{ asset('admin_assets') }}/vendor/tinymce/tinymce.min.js"></script>
+    <script src="{{ asset('admin_assets') }}/vendor/php-email-form/validate.js"></script>
 
     <!-- Template Main JS File -->
-    <script src="{{ asset('admin_assets/js/main.js') }}"></script>
-
-    @yield('script')
+    <script src="{{ asset('admin_assets') }}/js/main.js"></script>
 
 </body>
 
