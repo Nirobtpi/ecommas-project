@@ -45,7 +45,8 @@
                                 <td>
                                     <a href="{{ route('admin.author.satus', $author->id) }}"
                                         class="btn btn-sm btn-{{ $author->status == 1 ? 'success' : 'primary' }}">{{ $author->status == 1 ? 'Deactive Author' : 'Active Author' }}</a>
-                                    <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                    <a data-link="{{ route('admin.author.delete', $author->id) }}"
+                                        class="btn btn-danger btn-sm delete">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -60,7 +61,24 @@
 
 @section('script')
 
-    </script>
+  <script>
+    $('.delete').click(function(){
+         Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var link = $(this).attr('data-link');
+                    window.location.href = link
+                }
+            });
+    })
+  </script>
 
     @if (session('status'))
         {
@@ -68,6 +86,17 @@
             Swal.fire({
                 title: "Success!",
                 text: "{{ session('status') }}",
+                icon: "success"
+            });
+        </script>
+        }
+    @endif
+    @if (session('delete'))
+        {
+        <script>
+            Swal.fire({
+                title: "Success!",
+                text: "{{ session('delete') }}",
                 icon: "success"
             });
         </script>

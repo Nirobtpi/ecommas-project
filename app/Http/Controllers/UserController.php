@@ -131,4 +131,8 @@ class UserController extends Controller
         }
         return back()->with('status','Author Status Updated');
     }
+    function author_delete($id){
+        Author::findOrFail($id)->delete();
+         return back()->with('delete','Author Deleted Successfully!');
+    }
 }

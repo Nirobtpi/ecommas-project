@@ -51,6 +51,7 @@ Route::middleware('auth')->prefix('admin')->group(function(){
     // Author route 
     Route::get('/author-list',[UserController::class,'author_list_page'])->name('admin.author.list');
     Route::get('/author-status/{id}',[UserController::class,'author_status'])->name('admin.author.satus');
+    Route::get('/author-delete/{id}',[UserController::class,'author_delete'])->name('admin.author.delete');
 
     // ===== Categorty ====
 
