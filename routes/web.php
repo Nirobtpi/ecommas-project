@@ -48,6 +48,9 @@ Route::middleware('auth')->prefix('admin')->group(function(){
     Route::get('users',[UserController::class,'User'])->name('user');
     Route::Post('user/add',[UserController::class,'addUser'])->name('user.add');
     Route::get('user/delete/{id}',[UserController::class,'userDelete'])->name('user.delete');
+    // Author route 
+    Route::get('/author-list',[UserController::class,'author_list_page'])->name('admin.author.list');
+    Route::get('/author-status/{id}',[UserController::class,'author_status'])->name('admin.author.satus');
 
     // ===== Categorty ====
 
@@ -83,6 +86,7 @@ Route::middleware('auth')->prefix('admin')->group(function(){
 Route::middleware('authormiddleware')->prefix('author')->group(function(){
     Route::get('/logout',[AuthorController::class,'author_logout'])->name('author.logout');
     Route::get('/dashboard',[AuthorController::class,'author_dashboard'])->name('author.dashboard');
+    
 });
 
 

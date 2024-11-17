@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PasswordRequest;
+use App\Models\Author\Author;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -111,5 +112,23 @@ class UserController extends Controller
             'password'=>Hash::make($request->password),
         ]);
         return back()->with('add_user','User Added Successfully');
+    }
+    function author_list_page(){
+        $authors=Author::all();
+        
+        return view('admin.user.author', compact('authors'));
+    }
+    function author_status($id){
+        $author=Author::findOrFail($id);
+        if($author->status == 0){
+            $author->update([
+                'status'=>'1',
+            ]);
+        }else{
+            $author->update([
+                'status'=>'0',
+            ]);
+        }
+        return back()->with('status','Author Status Updated');
     }
 }

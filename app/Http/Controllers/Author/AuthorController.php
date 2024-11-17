@@ -54,4 +54,5 @@ class AuthorController extends Controller
     public function author_dashboard(){
         return view('frontend.author.admin');
     }
+   
 }

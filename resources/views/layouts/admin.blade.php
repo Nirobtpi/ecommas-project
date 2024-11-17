@@ -289,6 +289,21 @@
                 </ul>
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#author" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Author</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="author" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ route('admin.author.list') }}"
+                            class="{{ Route::is('admin.author.list') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Author List</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#"
                     aria-expanded="false">
                     <i class="bi bi-journal-text"></i><span>Category</span><i class="bi bi-chevron-down ms-auto"></i>
