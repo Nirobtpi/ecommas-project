@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PasswordRequest;
+use App\Mail\MyEmail;
 use App\Models\Author\Author;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Unique;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -124,6 +126,13 @@ class UserController extends Controller
             $author->update([
                 'status'=>'1',
             ]);
+
+            $data=[
+                'message' => 'Your Account Actived',
+            ];
+             Mail::to('nirobtpiinfo@gmail.com')->send(new MyEmail($data));
+             
+       
         }else{
             $author->update([
                 'status'=>'0',
