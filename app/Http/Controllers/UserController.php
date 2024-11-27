@@ -128,9 +128,9 @@ class UserController extends Controller
             ]);
 
             $data=[
-                'message' => 'Your Account Actived',
+                'message' => 'Your Account Actived,Please Login Your Account!',
             ];
-             Mail::to('nirobtpiinfo@gmail.com')->send(new MyEmail($data));
+             Mail::to($author->email)->send(new MyEmail($data));
              
        
         }else{

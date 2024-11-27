@@ -87,6 +87,9 @@ Route::middleware('auth')->prefix('admin')->group(function(){
 Route::middleware('authormiddleware')->prefix('author')->group(function(){
     Route::get('/logout',[AuthorController::class,'author_logout'])->name('author.logout');
     Route::get('/dashboard',[AuthorController::class,'author_dashboard'])->name('author.dashboard');
+    Route::get('/edit/profile',[AuthorController::class,'authorEdit'])->name('author.edit');
+    Route::post('/edit/profile/{id}',[AuthorController::class,'authorUpdate'])->name('author.update');
+    Route::post('/edit/profile/password/{id}',[AuthorController::class,'authorPassword'])->name('author.update.password');
     
 });
 

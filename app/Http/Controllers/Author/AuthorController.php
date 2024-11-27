@@ -54,5 +54,32 @@ class AuthorController extends Controller
     public function author_dashboard(){
         return view('frontend.author.admin');
     }
-   
+   public function authorEdit(){
+    return view('frontend.author.edit');
+   }
+   public function authorUpdate(Request $request, $id){
+    $request->validate([
+        'name'=>['required'],
+    ]);
+    Author::findOrFail($id)->update([
+        'name'=>$request->name,
+    ]);
+    return back()->with('update','Your Data Update Successfully!');
+   }
+   public function authorPassword(Request $request, $id){
+    
+    if(Hash::check($request->old_password,Auth::guard('author')->user()->password)){
+        $request->validate([
+            'password'=>['required','min:8','max:15','confirmed'],
+        ]);
+        Author::findOrFail($id)->update([
+            'password'=>Hash::make($request->password),
+        ]);
+        return back()->with('password_success','Your Password Updated!');
+        
+    }else{
+        return back()->with('old_pass','Your Current Password Is Wrong!');
+    }
+    
+   }
 }
