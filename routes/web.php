@@ -90,6 +90,7 @@ Route::middleware('authormiddleware')->prefix('author')->group(function(){
     Route::get('/edit/profile',[AuthorController::class,'authorEdit'])->name('author.edit');
     Route::post('/edit/profile/{id}',[AuthorController::class,'authorUpdate'])->name('author.update');
     Route::post('/edit/profile/password/{id}',[AuthorController::class,'authorPassword'])->name('author.update.password');
+    Route::post('/edit/profile/photo/{id}',[AuthorController::class,'authorPhoto'])->name('author.update.photo');
     
 });
 

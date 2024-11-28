@@ -7,6 +7,8 @@ use App\Models\Author\Author;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class AuthorController extends Controller
 {
@@ -82,4 +84,37 @@ class AuthorController extends Controller
     }
     
    }
+
+   public function authorPhoto(Request $request, $id){
+
+    if($request->photo !=''){
+        $request->validate([
+            'photo'=>['mimes:png,jpg','max:2048'],
+        ]);
+        $user=Author::findOrFail($id);
+        if($user->photo !=''){
+            unlink(public_path('uploads/author/').$user->photo);
+        }
+        $photo=$request->photo;
+        $fileEx=$photo->extension();
+        
+        $fileName=Auth::guard('author')->user()->name .rand(1111,9999).time().'.'.$fileEx;
+        
+        $manager = new ImageManager(new Driver());
+        $image = $manager->read($photo);
+        $image->resize(300,300);
+        $image->save(public_path('uploads/author/').$fileName);
+
+        AUthor::findOrFail($id)->update([
+            'photo'=>$fileName,
+        ]);
+
+        return back()->with('photo_success','Your Profile Picture Updated!');
+    }else{
+         return back()->with('photo_danger','Please Select Yout Profile Picture!');
+    }
+
+   }
+
+   
 }

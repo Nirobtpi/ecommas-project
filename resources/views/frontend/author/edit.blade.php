@@ -4,7 +4,7 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Update Data</h5>
+                    <h5 class="card-title">Edit Profile</h5>
                     @if (session('update'))
                         <div class="alert alert-success">
                             {{ session('update') }}
@@ -34,7 +34,7 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Update Password</h5>
+                    <h5 class="card-title">Edit Password</h5>
                     @if (session('password_success'))
                         <div class="alert alert-success">
                             {{ session('password_success') }}
@@ -65,6 +65,45 @@
                         </div>
                         <div>
                             <button type="submit" class="btn btn-primary">Update Password</button>
+                        </div>
+                    </form><!-- Vertical Form -->
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Update Photo</h5>
+                    @if (session('photo_success'))
+                        <div class="alert alert-success">
+                            {{ session('photo_success') }}
+                        </div>
+                    @endif
+                    @if (session('photo_danger'))
+                        <div class="alert alert-danger">
+                            {{ session('photo_danger') }}
+                        </div>
+                    @endif
+                    <form class="row g-3" action="{{ route('author.update.photo', Auth::guard('author')->user()->id) }} "
+                        enctype="multipart/form-data" method="POST">
+                        @csrf
+
+                        <div class="col-12">
+                            <label for="photo" class="form-label">Photo</label>
+                            <input type="file" name="photo" class="form-control" id="photo"
+                                onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                            @error('photo')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                            <div class="mt-3">
+                                <img src="{{ asset('uploads/author') }}/{{ Auth::guard('author')->user()->photo }}"
+                                    id="blah" width="50px" height="50px" alt="">
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="btn btn-primary">Update Photo</button>
                         </div>
                     </form><!-- Vertical Form -->
 
