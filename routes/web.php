@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Author\AuthorController;
+use App\Http\Controllers\Author\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
@@ -91,6 +92,9 @@ Route::middleware('authormiddleware')->prefix('author')->group(function(){
     Route::post('/edit/profile/{id}',[AuthorController::class,'authorUpdate'])->name('author.update');
     Route::post('/edit/profile/password/{id}',[AuthorController::class,'authorPassword'])->name('author.update.password');
     Route::post('/edit/profile/photo/{id}',[AuthorController::class,'authorPhoto'])->name('author.update.photo');
+
+    // post route 
+    Route::get('add/post',[PostController::class,'post'])->name('author.add.post');
     
 });
 

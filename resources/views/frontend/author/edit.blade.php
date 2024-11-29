@@ -98,7 +98,7 @@
                             @enderror
                             <div class="mt-3">
                                 <img src="{{ asset('uploads/author') }}/{{ Auth::guard('author')->user()->photo }}"
-                                    id="blah" width="50px" height="50px" alt="">
+                                    id="blah" width="50px" alt="">
                             </div>
                         </div>
 

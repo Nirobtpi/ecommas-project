@@ -20,6 +20,7 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link href="{{ asset('admin_assets') }}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('admin_assets') }}/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="{{ asset('admin_assets') }}/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -27,6 +28,8 @@
     <link href="{{ asset('admin_assets') }}/vendor/quill/quill.bubble.css" rel="stylesheet">
     <link href="{{ asset('admin_assets') }}/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="{{ asset('admin_assets') }}/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    @yield('styles')
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('admin_assets') }}/css/style.css" rel="stylesheet">
@@ -217,15 +220,20 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        <img src="{{ asset('admin_assets') }}/img/profile-img.jpg" alt="Profile"
-                            class="rounded-circle">
+                        @if (Auth::guard('author')->user()->photo != '')
+                            <img src="{{ asset('uploads/author') }}/{{ Auth::guard('author')->user()->photo }}"
+                                alt="Profile" class="rounded-circle">
+                        @else
+                            <img src="{{ asset('admin_assets') }}/img/profile-img.jpg" alt="Profile"
+                                class="rounded-circle">
+                        @endif
                         <span
                             class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::guard('author')->user()->name }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ Auth::guard('author')->user()->name }}n</h6>
+                            <h6>{{ Auth::guard('author')->user()->name }}</h6>
                             <span>Web Designer</span>
                         </li>
                         <li>
@@ -240,13 +248,6 @@
                         </li>
                         <li>
                             <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                <i class="bi bi-gear"></i>
-                                <span>Account Settings</span>
-                            </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -285,7 +286,8 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Info</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-menu-button-wide"></i><span>Your Profile</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -293,13 +295,23 @@
                             <i class="bi bi-circle"></i><span>Author</span>
                         </a>
                     </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#components-post" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Post</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="components-post" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="components-accordion.html">
-                            <i class="bi bi-circle"></i><span>Accordion</span>
+                        <a href="{{ route('author.add.post') }}" class="{{ Route::is('author.add.post') ? 'active':'' }}">
+                            <i class="bi bi-circle"></i><span>Add New Post</span>
                         </a>
                     </li>
                 </ul>
-            </li><!-- End Components Nav -->
+            </li>
+
+            <!-- End Components Nav -->
         </ul>
         </li><!-- End Icons Nav -->
         </ul>
@@ -314,7 +326,7 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Nirob</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
             <!-- All the links in the footer should remain intact. -->
@@ -337,6 +349,8 @@
     <script src="{{ asset('admin_assets') }}/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="{{ asset('admin_assets') }}/vendor/tinymce/tinymce.min.js"></script>
     <script src="{{ asset('admin_assets') }}/vendor/php-email-form/validate.js"></script>
+
+    @yield('script')
 
     <!-- Template Main JS File -->
     <script src="{{ asset('admin_assets') }}/js/main.js"></script>
