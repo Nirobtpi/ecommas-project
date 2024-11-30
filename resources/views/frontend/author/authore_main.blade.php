@@ -308,6 +308,11 @@
                             <i class="bi bi-circle"></i><span>Add New Post</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('author.post.show') }}" class="{{ Route::is('author.post.show') ? 'active':'' }}">
+                            <i class="bi bi-circle"></i><span>My Post</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 

@@ -95,6 +95,8 @@ Route::middleware('authormiddleware')->prefix('author')->group(function(){
 
     // post route 
     Route::get('add/post',[PostController::class,'post'])->name('author.add.post');
+    Route::post('add/post/store',[PostController::class,'post_store'])->name('author.post.store');
+    Route::get('my-post',[PostController::class,'my_post'])->name('author.post.show');
     
 });
 

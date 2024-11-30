@@ -10,4 +10,5 @@ class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $guarded=[];
 }

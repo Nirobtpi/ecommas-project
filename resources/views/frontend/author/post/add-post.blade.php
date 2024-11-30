@@ -18,15 +18,30 @@
                 <div class="card-body">
                     <h5 class="card-title">Add New Post</h5>
 
+                    @if (session('add_post'))
+                        <div class="alert alert-success">
+                            {{ session('add_post') }}
+                        </div>
+                    @endif
+
                     <!-- Vertical Form -->
-                    <form class="row g-3" method="POST" action="" enctype="multipart/form-data">
+                    <form class="row g-3" method="POST" action="{{ route('author.post.store') }}"
+                        enctype="multipart/form-data">
+                        @csrf
                         <div class="col-12">
                             <label for="title" class="form-label">Title*</label>
-                            <input type="text" class="form-control" id="title">
+                            <input type="text" value="{{ old('title') }}" class="form-control" id="title"
+                                name="title">
+                            @error('title')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="col-12">
                             <label for="description" class="form-label">Description*</label>
-                            <textarea name="description" id="description" class="form-control" height='150px'></textarea>
+                            <textarea name="description" value="{{ old('description') }}" id="description" class="form-control" height='150px'></textarea>
+                            @error('description')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="col-12">
                             <label for="category" class="form-label">Category*</label>
@@ -36,11 +51,17 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
+                            @error('category')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="col-12">
                             <label for="read_time" class="form-label">Read Time</label>
-                            <input type="number" name="read_time" class="form-control" id="read_time"
-                                placeholder="1234">
+                            <input type="number" value="{{ old('read_time') }}" name="read_time" class="form-control"
+                                id="read_time" placeholder="1234">
+                            @error('read_time')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="col-12">
                             <label for="tag" class="form-label">Tags</label>
@@ -54,14 +75,23 @@
 
                                 </optgroup>
                             </select>
+                            @error('tag')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="col-12">
                             <label for="preview_image" class="form-label">Preview Image</label>
                             <input type="file" name="preview_image" class="form-control" id="preview_image">
+                            @error('preview_image')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="col-12">
                             <label for="thumbnail_image" class="form-label">Thumbnail Image</label>
                             <input type="file" name="thumbnail_image" class="form-control" id="thumbnail_image">
+                            @error('thumbnail_image')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <button type="submit" class="btn btn-primary">Add Post</button>
