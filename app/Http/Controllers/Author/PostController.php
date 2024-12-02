@@ -88,4 +88,20 @@ class PostController extends Controller
         $posts=Post::where('author_id',$authorId)->get();
         return view('frontend.author.post.my-post',compact('posts'));
     }
+
+    public function active_post($id){
+       $post= Post::findOrFail($id);
+
+       if($post->status == 1){
+        $post->update([
+            'status'=>0,
+        ]);
+        return back()->with('post_deactive','Your Post Deactived!');
+       }else{
+        $post->update([
+            'status'=>1,
+        ]);
+        return back()->with('post_active','Your Post Published Now');
+       }
+    }
 }

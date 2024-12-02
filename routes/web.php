@@ -97,6 +97,8 @@ Route::middleware('authormiddleware')->prefix('author')->group(function(){
     Route::get('add/post',[PostController::class,'post'])->name('author.add.post');
     Route::post('add/post/store',[PostController::class,'post_store'])->name('author.post.store');
     Route::get('my-post',[PostController::class,'my_post'])->name('author.post.show');
+    Route::get('post/active/{id}',[PostController::class,'active_post'])->name('post.active');
+    Route::get('post/delete/{id}',[PostController::class,'post_delete'])->name('post.delete');
     
 });
 
