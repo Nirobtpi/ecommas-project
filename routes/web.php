@@ -101,6 +101,10 @@ Route::middleware('authormiddleware')->prefix('author')->group(function(){
     Route::get('post/delete/{id}',[PostController::class,'post_delete'])->name('post.delete');
     
 });
+// post details route 
+Route::get('post/details/{slug}',[FrontendController::class,'post_datails'])->name('post.details');
+Route::get('author/all/post/{id}',[FrontendController::class,'author_post'])->name('author.post');
+Route::get('cartgories/all/category/{id}',[FrontendController::class,'category_post'])->name('category.post');
 
 
 require __DIR__.'/auth.php';

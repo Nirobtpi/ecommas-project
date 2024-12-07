@@ -34,6 +34,8 @@ class PostController extends Controller
             'thumbnail_image'=>['required','mimes:jpeg,png,jpg,svg'],
         ]);
 
+        $slug=Str::lower(str_replace(' ','-',$request->title).'-'.random_int(1111,9999));
+
         // preview Image 
         $preview=$request->preview_image;
 
@@ -66,10 +68,13 @@ class PostController extends Controller
 
         $tagid=$request->tag;
 
+       
+        
+
         Post::create([
             'author_id'=>Auth::guard('author')->id(),
             'title'=>$request->title,
-            'slug'=>Str::slug($request->title),
+            'slug'=>$slug,
             'description'=>$request->description,
             'category_id'=>$request->category,
             'read_time'=>$request->read_time,
@@ -85,7 +90,7 @@ class PostController extends Controller
     }
     public function my_post(){
          $authorId = Auth::guard('author')->id();
-        $posts=Post::where('author_id',$authorId)->get();
+        $posts=Post::where('author_id',$authorId)->paginate(2);
         return view('frontend.author.post.my-post',compact('posts'));
     }
 
@@ -103,5 +108,23 @@ class PostController extends Controller
         ]);
         return back()->with('post_active','Your Post Published Now');
        }
+    }
+    public function post_delete($id){
+       $post= Post::findOrFail($id);
+
+    //    preview image delete 
+
+        if($post->preview_image !=''){
+            unlink(public_path('uploads/post/preview/').$post->preview_image);
+        }
+    //    thumbnail image delete 
+
+        if($post->thumbnail_image !=''){
+            unlink(public_path('uploads/post/thumbnail/').$post->thumbnail_image);
+        }
+
+        $post->forceDelete();
+
+        return back()->with('delete','Post Deleted Successfully');
     }
 }

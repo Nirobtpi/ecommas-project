@@ -19,9 +19,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($posts as $post)
+                            @foreach ($posts as $index=>$post)
                                 <tr>
-                                    <th scope="row">{{ $loop->index + 1 }}</th>
+                                    <th scope="row">{{ $posts->firstitem() + $index }}</th>
                                     <td>{{ $post->title }}</td>
                                     <td><img width="60px" height="60px"
                                             src="{{ asset('uploads/post/thumbnail') . '/' . $post->thumbnail_image }}"
@@ -35,12 +35,17 @@
                                         <a href="" class="btn btn-info">Edit</a>
                                         <a href="{{ route('post.active', $post->id) }}"
                                             class="btn btn-{{ $post->status == 1 ? 'success' : 'primary' }}">{{ $post->status == 1 ? 'Deactive' : 'Active' }}</a>
-                                        <a data-link="{{ route('post.delete', $post->id) }}" class="btn btn-danger">Delete</a>
+                                        <a data-link="{{ route('post.delete', $post->id) }}"
+                                            class="btn btn-danger del-btn">Delete</a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
+
                     </table>
+                    <div class="mt-2">
+                        {{ $posts->links() }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,23 +58,52 @@
     @if (session('post_active'))
         <script>
             Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "{{ session('post_active') }}",
-            showConfirmButton: false,
-            timer: 1500
-        });
+                position: "top-end",
+                icon: "success",
+                title: "{{ session('post_active') }}",
+                showConfirmButton: false,
+                timer: 1500
+            });
         </script>
     @endif
     @if (session('post_deactive'))
         <script>
             Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "{{ session('post_deactive') }}",
-            showConfirmButton: false,
-            timer: 1500
-        });
+                position: "top-end",
+                icon: "success",
+                title: "{{ session('post_deactive') }}",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
+
+
+    <script>
+        $('.del-btn').click(function() {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var link = $(this).attr('data-link');
+                    window.location.href = link;
+                }
+            });
+        })
+    </script>
+    @if (session('delete'))
+        <script>
+            Swal.fire({
+                title: "Deleted!",
+                text: "{{ session('delete') }}",
+                icon: "success"
+            });
         </script>
     @endif
 @endsection
