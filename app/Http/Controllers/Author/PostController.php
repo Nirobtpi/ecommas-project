@@ -81,6 +81,7 @@ class PostController extends Controller
             'tag_id'=>implode(',',$tagid),
             'preview_image'=>$previewImageFileName,
             'thumbnail_image'=>$thumbnail_image_name,
+            'published_at'=>$request->published_at,
 
         ]);
         

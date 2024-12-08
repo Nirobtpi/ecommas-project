@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('preview_image');
             $table->string('thumbnail_image');
             $table->integer('status')->default(0);
+            $table->timestamp('published_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

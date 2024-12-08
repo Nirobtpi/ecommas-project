@@ -87,6 +87,13 @@
                             @enderror
                         </div>
                         <div class="col-12">
+                            <label for="published_at" class="form-label">published Date</label>
+                            <input type="date" name="published_at" class="form-control" id="published_at">
+                            @error('published_at')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="col-12">
                             <label for="thumbnail_image" class="form-label">Thumbnail Image</label>
                             <input type="file" name="thumbnail_image" class="form-control" id="thumbnail_image">
                             @error('thumbnail_image')
