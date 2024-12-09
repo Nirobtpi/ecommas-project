@@ -3,6 +3,7 @@
 use App\Http\Controllers\Author\AuthorController;
 use App\Http\Controllers\Author\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentControlar;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -105,6 +106,7 @@ Route::middleware('authormiddleware')->prefix('author')->group(function(){
 Route::get('post/details/{slug}',[FrontendController::class,'post_datails'])->name('post.details');
 Route::get('author/all/post/{id}',[FrontendController::class,'author_post'])->name('author.post');
 Route::get('cartgories/all/category/{id}',[FrontendController::class,'category_post'])->name('category.post');
+Route::post('add/comment',[CommentControlar::class,'comment'])->name('add.comment');
 
 
 require __DIR__.'/auth.php';

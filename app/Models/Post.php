@@ -22,4 +22,7 @@ class Post extends Model
     public function tag_rel(){
         return $this->hasMany(Tag::class,'tag_id');
     }
+    public function comment(){
+        return $this->hasMany(Comment::class,'post_id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author\Author;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -28,9 +29,10 @@ class FrontendController extends Controller
     }
     public function post_datails($slug){
         $post=Post::where('slug',$slug)->first();
-       
-       $tags=explode(',',$post->tag_id);
-        return view('frontend.post-details',compact('post','tags'));
+        $comments=Comment::where('post_id',$post->id)->orderBy('id','desc')->get();
+        $count=Comment::where('post_id',$post->id)->count();
+        $tags=explode(',',$post->tag_id);
+        return view('frontend.post-details',compact('post','tags','comments','count'));
     }
 
     public function author_post($id){

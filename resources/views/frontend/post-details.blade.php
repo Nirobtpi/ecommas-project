@@ -22,7 +22,9 @@
                                 @else
                                     <li class="post-author-img"><img src="assets/img/author/1.jpg" alt=""></li>
                                 @endif
-                                <li class="post-author"> <a href="{{ route('author.post',$post->author->id) }}">{{ $post->author->name }}</a></li>
+                                <li class="post-author"> <a
+                                        href="{{ route('author.post', $post->author->id) }}">{{ $post->author->name }}</a>
+                                </li>
                                 <li class="entry-cat"> <a href="blog-layout-1.html" class="category-style-1 "> <span
                                             class="line"></span> Livestyle</a></li>
                                 <li class="post-date"> <span class="line"></span> february 10 ,2022</li>
@@ -89,12 +91,14 @@
                             <div class="authors-info">
                                 <div class="image">
                                     @if ($post->author->photo != '')
-                                    <li class="post-author-img"><img
-                                            src="{{ asset('uploads/author') }}/{{ $post->author->photo }}" alt="">
-                                    </li>
-                                @else
-                                    <li class="post-author-img"><img src="{{ asset('assets/img/author/1.jpg') }}" alt=""></li>
-                                @endif
+                                        <li class="post-author-img"><img
+                                                src="{{ asset('uploads/author') }}/{{ $post->author->photo }}"
+                                                alt="">
+                                        </li>
+                                    @else
+                                        <li class="post-author-img"><img src="{{ asset('assets/img/author/1.jpg') }}"
+                                                alt=""></li>
+                                    @endif
                                 </div>
                                 <div class="content">
                                     <h4>{{ $post->author->name }}</h4>
@@ -184,81 +188,54 @@
                         <!--post-single-Ads-->
                         <div class="post-single-ads ">
                             <div class="ads">
-                                <img src="assets/img/ads/ads.jpg" alt="">
+                                <img src="{{ asset('frontend_assets/img/ads/ads.jpg') }}" alt="">
                             </div>
                         </div>
 
                         <!--post-single-comments-->
                         <div class="post-single-comments">
                             <!--Comments-->
-                            <h4>3 Comments</h4>
+                            <h4>{{ $count }} Comments</h4>
                             <ul class="comments">
                                 <!--comment1-->
-                                <li class="comment-item pt-0">
-                                    <img src="assets/img/other/user1.jpg" alt="">
-                                    <div class="content">
-                                        <div class="meta">
-                                            <ul class="list-inline">
-                                                <li><a href="#">Nirmaine Nicole</a> </li>
-                                                <li class="slash"></li>
-                                                <li>3 Months Ago</li>
-                                            </ul>
-                                        </div>
-                                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus at
-                                            doloremque adipisci eum placeat
-                                            quod non fugiat aliquid sit similique!
-                                        </p>
-                                        <a href="#" class="btn-reply"><i class="las la-reply"></i> Reply</a>
-                                    </div>
 
-                                </li>
-                                <!--comment2-->
-                                <li class="comment-item">
-                                    <img src="assets/img/other/use2.jpg" alt="">
-                                    <div class="content">
-                                        <div class="meta">
-                                            <ul class="list-inline">
-                                                <li><a href="#">adam smith</a> </li>
-                                                <li class="slash"></li>
-                                                <li>3 Months Ago</li>
-                                            </ul>
+                                @forelse ($comments as $comment)
+                                    <li class="comment-item pt-0">
+                                        <div class="content">
+                                            <div class="meta">
+                                                <ul class="list-inline">
+                                                    <img src="{{ asset('frontend_assets/img/other/use2.jpg') }}"
+                                                        alt="">
+                                                    <li>{{ $comment->author_name }}</li>
+                                                    <li class="slash"></li>
+                                                    <li>{{ $comment->created_at->diffForHumans() }}</li>
+                                                </ul>
+                                            </div>
+                                            <p>{{ $comment->comment_body }}
+                                            </p>
+                                            <a href="#" class="btn-reply"><i class="las la-reply"></i> Reply</a>
                                         </div>
-                                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus at
-                                            doloremque adipisci eum placeat
-                                            quod non fugiat aliquid sit similique!
-                                        </p>
-                                        <a href="#" class="btn-reply"><i class="las la-reply"></i> Reply</a>
-                                    </div>
-                                </li>
-                                <!--comment3-->
-                                <li class="comment-item">
-                                    <img src="assets/img/other/user3.jpg" alt="">
-                                    <div class="content">
-                                        <div class="meta">
-                                            <ul class="list-inline">
-                                                <li><a href="#">Emma david</a> </li>
-                                                <li class="slash"></li>
-                                                <li>3 Months Ago</li>
-                                            </ul>
-                                        </div>
-                                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus at
-                                            doloremque adipisci eum placeat
-                                            quod non fugiat aliquid sit similique!
-                                        </p>
-                                        <a href="#" class="btn-reply"><i class="las la-reply"></i> Reply</a>
-                                    </div>
-                                </li>
+
+                                    </li>
+                                @empty
+                                    <h2>No Comment Found!</h2>
+                                @endforelse
 
                             </ul>
                             <!--Leave-comments-->
                             <div class="comments-form">
                                 <h4>Leave a Reply</h4>
                                 <!--form-->
-                                <form class="form " action="#" method="POST" id="main_contact_form">
+                                <form class="form " action="{{ route('add.comment') }}" method="POST"
+                                    id="main_contact_form">
+                                    @csrf
                                     <p>Your email adress will not be published ,Requied fileds are marked*.</p>
-                                    <div class="alert alert-success contact_msg" style="display: none" role="alert">
-                                        Your message was sent successfully.
-                                    </div>
+                                    @if (session('comment_success'))
+                                        <div class="alert alert-success contact_msg" role="alert">
+                                            {{ session('comment_success') }}
+                                        </div>
+                                    @endif
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -278,15 +255,17 @@
                                                     required="required"></textarea>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="hidden" name="post_id" id="post_id"
+                                                        class="form-control" placeholder="post Id*"
+                                                        value="{{ $post->id }}" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="col-lg-12">
-                                            <div class="mb-20">
-                                                <input name="name" type="checkbox" value="1"
-                                                    required="required">
-                                                <label for="name"><span>save my name , email and website in this
-                                                        browser for the next time I comment.</span></label>
-                                            </div>
-
                                             <button type="submit" name="submit" class="btn-custom">
                                                 Send Comment
                                             </button>
